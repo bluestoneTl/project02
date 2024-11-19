@@ -1,6 +1,6 @@
 # ignored folders
 # datasets/*
-experiments/*
+# experiments/*
 results/*
 tb_logger/*
 wandb/*
@@ -15,7 +15,7 @@ version.py
 # ignored files with suffix
 *.html
 *.gif
-*.pth
+# *.pth
 *.zip
 
 # Byte-compiled / optimized / DLL files
