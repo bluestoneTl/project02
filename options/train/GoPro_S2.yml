@@ -10,8 +10,8 @@ datasets:
   train:
     name: TrainSet
     type: PairedImageIRDataset
-    dataroot_gt: datasets/GoPro/crop/train/target_crops
-    dataroot_lq: datasets/GoPro/crop/train/input_crops
+    dataroot_gt: datasets/data_4000_NewName/train/HR
+    dataroot_lq: datasets/data_4000_NewName/train/LQ
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -36,8 +36,8 @@ datasets:
   val:
     name: ValSet
     type: PairedImageIRDataset
-    dataroot_gt: datasets/GoPro/crop/val/target_crops
-    dataroot_lq: datasets/GoPro/crop/val/input_crops
+    dataroot_gt: datasets/data_4000_NewName/val/HR
+    dataroot_lq: datasets/data_4000_NewName/val/LQ
     filename_tmpl: '{}'
     io_backend:
       type: disk
