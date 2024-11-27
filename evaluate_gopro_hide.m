@@ -4,7 +4,8 @@
 
 close all;clear all;
 
-datasets = {'GoPro', 'HIDE'};
+// datasets = {'GoPro', 'HIDE'};
+datasets = {'GoPro'};
 num_set = length(datasets);
 
 tic
