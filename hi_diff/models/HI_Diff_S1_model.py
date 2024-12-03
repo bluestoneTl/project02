@@ -110,7 +110,7 @@ class HI_Diff_S1(BaseModel):
     def optimize_parameters(self, current_iter):
         self.optimizer_total.zero_grad()
 
-        prior = self.net_le(self.lq, self.gt)
+        prior = self.net_le(self.lq, self.gt)       # 生成先验信息  
         self.output = self.net_g(self.lq, prior)
 
         l_total = 0

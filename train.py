@@ -22,7 +22,7 @@ import os.path as osp
 import basicsr
 import hi_diff
 import numpy as np
-
+#初始化日志
 def init_tb_loggers(opt):
     # initialize wandb logger before tensorboard logger to allow proper sync
     if (opt['logger'].get('wandb') is not None) and (opt['logger']['wandb'].get('project')
@@ -34,7 +34,7 @@ def init_tb_loggers(opt):
         tb_logger = init_tb_logger(log_dir=osp.join(opt['root_path'], 'tb_logger', opt['name']))
     return tb_logger
 
-
+#创建训练和验证数据加载器
 def create_train_val_dataloader(opt, logger):
     # create train and val dataloaders
     train_loader, val_loaders = None, []
@@ -73,7 +73,7 @@ def create_train_val_dataloader(opt, logger):
 
     return train_loader, train_sampler, val_loaders, total_epochs, total_iters
 
-
+#加载恢复训练状态
 def load_resume_state(opt):
     resume_state_path = None
     if opt['auto_resume']:
@@ -96,8 +96,9 @@ def load_resume_state(opt):
         check_resume(opt, resume_state['iter'])
     return resume_state
 
-
+#训练流程主函数
 def train_pipeline(root_path):
+    # 解析选项和初始化设置
     # parse options, set distributed setting, set ramdom seed
     opt, args = parse_options(root_path, is_train=True)
     opt['root_path'] = root_path
@@ -106,6 +107,7 @@ def train_pipeline(root_path):
     # torch.backends.cudnn.deterministic = True
     # torch.backends.cudnn.benchmark = False
 
+    # 加载恢复状态和创建目录
     # load resume states if necessary
     resume_state = load_resume_state(opt)
     # mkdir for experiments and logger
@@ -114,6 +116,7 @@ def train_pipeline(root_path):
         if opt['logger'].get('use_tb_logger') and 'debug' not in opt['name'] and opt['rank'] == 0:
             mkdir_and_rename(osp.join(opt['root_path'], 'tb_logger', opt['name']))
 
+    # 复制配置文件和初始化日志记录器：
     # copy the yml file to the experiment root
     copy_opt_file(args.opt, opt['path']['experiments_root'])
 
@@ -126,10 +129,12 @@ def train_pipeline(root_path):
     # initialize wandb and tb loggers
     tb_logger = init_tb_loggers(opt)
 
+    # 创建数据加载器
     # create train and validation dataloaders
     result = create_train_val_dataloader(opt, logger)
     train_loader, train_sampler, val_loaders, total_epochs, total_iters = result
 
+    # 创建模型和处理恢复训练
     # create model
     model = build_model(opt)
     if resume_state:  # resume training
@@ -141,6 +146,7 @@ def train_pipeline(root_path):
         start_epoch = 0
         current_iter = 0
 
+    # 创建消息记录器和数据预取器
     # create message logger (formatted outputs)
     msg_logger = MessageLogger(opt, current_iter, tb_logger)
 
@@ -156,6 +162,7 @@ def train_pipeline(root_path):
     else:
         raise ValueError(f"Wrong prefetch_mode {prefetch_mode}. Supported ones are: None, 'cuda', 'cpu'.")
 
+    # 开始训练循环
     # training
     logger.info(f'Start training from epoch: {start_epoch}, iter: {current_iter}')
     data_timer, iter_timer = AvgTimer(), AvgTimer()
@@ -179,6 +186,7 @@ def train_pipeline(root_path):
         prefetcher.reset()
         train_data = prefetcher.next()
 
+        # 迭代训练数据
         while train_data is not None:
             data_timer.record()
 
@@ -255,6 +263,7 @@ def train_pipeline(root_path):
 
     # end of epoch
 
+    # 训练结束处理
     consumed_time = str(datetime.timedelta(seconds=int(time.time() - start_time)))
     logger.info(f'End of training. Time consumed: {consumed_time}')
     logger.info('Save the latest model.')
