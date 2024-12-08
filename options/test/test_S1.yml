@@ -44,11 +44,11 @@ network_le:
 
 # path
 path:
-  pretrain_network_g: experiments/train_HI_Diff_GoPro_S1/models/net_g_S1.pth  # 第一阶段 Transformer 模型权重路径
+  pretrain_network_g: experiments/train_HI_Diff_GoPro_S1/models/net_g_232000.pth  # 第一阶段 Transformer 模型权重路径
   param_key_g: params
   strict_load_g: true
 
-  pretrain_network_le: experiments/train_HI_Diff_GoPro_S1/models/net_le_S1.pth  # 第一阶段 LE 模型权重路径
+  pretrain_network_le: experiments/train_HI_Diff_GoPro_S1/models/net_le_232000.pth  # 第一阶段 LE 模型权重路径
   param_key_g: params
   strict_load_le: true
 
