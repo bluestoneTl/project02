@@ -82,13 +82,15 @@ path:
 
 # training settings
 train:
-  total_iter: 300000
+  # total_iter: 300000
+  total_iter: 200000             # 【新训练更改，尝试解决过拟合问题】
   warmup_iter: -1 # no warm up
   use_grad_clip: True
 
   scheduler:
     type: CosineAnnealingRestartCyclicLR
-    periods: [100000, 200000]       
+    # periods: [100000, 200000]       
+    periods: [70000, 150000]     # 【新训练更改，尝试解决过拟合问题】
     restart_weights: [1,1]
     eta_mins: [0.0002,0.000001]
   
