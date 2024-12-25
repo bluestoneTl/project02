@@ -227,6 +227,7 @@ def data_augmentation(image, mode):
 
     return out
 
+# 原数据增强函数
 def random_augmentation(*args):
     out = []
     flag_aug = random.randint(0,7)
