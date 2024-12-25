@@ -89,7 +89,7 @@ class PairedImageIRDataset(data.Dataset):
             img_gt, img_lq = paired_random_crop(img_gt, img_lq, gt_size, scale, gt_path)
             # flip, rotation
             # img_gt, img_lq = augment([img_gt, img_lq], self.opt['use_hflip'], self.opt['use_rot'])
-            img_gt, img_lq = random_augmentation(img_gt, img_lq)
+            img_gt, img_lq = random_augmentation(img_gt, img_lq)        # 原数据增强调用
 
         # # color space transform
         # if 'color' in self.opt and self.opt['color'] == 'y':

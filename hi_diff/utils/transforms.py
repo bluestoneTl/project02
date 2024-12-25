@@ -179,7 +179,7 @@ def img_rotate(img, angle, center=None, scale=1.0):
     rotated_img = cv2.warpAffine(img, matrix, (w, h))
     return rotated_img
 
-
+# 原数据增强函数
 def data_augmentation(image, mode):
     """
     Performs data augmentation of the input image

@@ -72,8 +72,7 @@ network_le:
 path:
   pretrain_network_g: ~
   param_key_g: params
-  strict_load_g: true
-
+  strict_load_g: true**
   pretrain_network_le: ~
   param_key_g: params
   strict_load_le: true
@@ -83,14 +82,14 @@ path:
 # training settings
 train:
   # total_iter: 300000
-  total_iter: 200000             # 【新训练更改，尝试解决过拟合问题】
+  total_iter: 150000             # 【新训练更改，尝试解决过拟合问题】
   warmup_iter: -1 # no warm up
   use_grad_clip: True
 
   scheduler:
     type: CosineAnnealingRestartCyclicLR
     # periods: [100000, 200000]       
-    periods: [70000, 150000]     # 【新训练更改，尝试解决过拟合问题】
+    periods: [50000, 100000]     # 【新训练更改，尝试解决过拟合问题】
     restart_weights: [1,1]
     eta_mins: [0.0002,0.000001]
   
